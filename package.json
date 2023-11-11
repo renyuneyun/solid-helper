@@ -1,6 +1,6 @@
 {
   "name": "@renyuneyun/solid-helper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Common helpers for developing SoLiD (Social Linked Data) under JS/TS",
   "main": "./dist/solid-helper.umd.js",
   "module": "./dist/solid-helper.mjs",
@@ -43,6 +43,7 @@
     "@comunica/query-sparql": "^2.10.0",
     "@inrupt/solid-client-authn-browser": "^1.16.0",
     "@inrupt/vocab-common-rdf": "^1.0.5",
+    "@renyuneyun/parse-link-header-ts": "^1.0.1",
     "solid-namespace": "^0.5.3"
   },
   "devDependencies": {

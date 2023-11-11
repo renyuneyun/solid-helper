@@ -1,5 +1,5 @@
 import NS from 'solid-namespace';
-import parseLinkHeader from '@sota1235/parse-link-header-ts';
+import parseLinkHeader from '@renyuneyun/parse-link-header-ts';
 import { QueryEngine } from '@comunica/query-sparql';
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
 

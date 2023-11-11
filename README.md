@@ -11,4 +11,5 @@ Under construction...
 For the time being, please see `index.ts` for exported functions and types. They are mainly:
 
 - `getUserInfo()`: Get some common information of the WebID (avatar, name, etc).
-- `getStorageFromLink()`: Get the Pod / storage (recursively up) from the specified URL. Mainly used when WebID does not have `space:storage` specified.
+- `findStorage()`:  Get the Pod / storage (recursively up) from the specified URL. Mainly used when WebID does not have `space:storage` specified.
+- `getStorageFromLink()`: Unrecursive version of `findStorage()` (also used inside `findStorage()`).

@@ -1,4 +1,4 @@
-import { UserInfoStruct, getUserInfo, getStorageFromLink } from "./solid-helper";
+import { UserInfoStruct, getUserInfo, getStorageFromLink, findStorage } from "./solid-helper";
 
-export { getUserInfo, getStorageFromLink };
+export { getUserInfo, getStorageFromLink, findStorage };
 export type { UserInfoStruct };
