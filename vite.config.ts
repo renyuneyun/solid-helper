@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import { resolve } from "node:path";
 import dts from "vite-plugin-dts";
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,12 +13,16 @@ export default defineConfig({
       fileName: "solid-helper",
     },
     rollupOptions: {
-      external: ["@inrupt/solid-client-authn-browser"],
+      external: ["@inrupt/solid-client-authn-browser", "abort-controller"],
       output: {
         globals: {
           "@inrupt/solid-client-authn-browser": "solidClientAuthnBrowser",
+          "abort-controller": "AbortController",
         },
       },
+      plugins: [
+        nodePolyfills( /* options */ )
+      ]
     },
   },
 });
