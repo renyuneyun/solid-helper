@@ -11,8 +11,21 @@ export interface UserInfoStruct {
 const ns = NS();
 const queryEngine = new QueryEngine();
 
+/**
+ * @deprecated
+ * Return the storage location if header exists; otherwise undefined
+ */
 export async function getStorageFromLink(urlObject: URL) {
-  console.log('Getting storage from link header for', urlObject);
+  if (await isStorageInLinkHeader(urlObject)) {
+    return urlObject.href;
+  }
+  return undefined;
+}
+
+/**
+ * Identify if the given URL is a storage based on the `Link` header.
+ */
+export async function isStorageInLinkHeader(urlObject: URL): Promise<boolean> {
   let resp = undefined;
   try {
     resp = await fetch(urlObject);
@@ -23,16 +36,15 @@ export async function getStorageFromLink(urlObject: URL) {
     if (linkHeader) {
       const parsed = parseLinkHeader(linkHeader, urlObject.href);
       // console.log('Link header(0):', parsed);
-      console.log('Link header:', JSON.stringify(parsed, undefined, 2));
       if ('type' in parsed) {
         if (ns.space('Storage') == parsed['type']!.url) {
           // console.log('Has storage:', urlObject);
-          return urlObject.href;
+          return true;
         }
       }
     }
   }
-  return undefined;
+  return false;
 }
 
 /**
@@ -43,20 +55,23 @@ export async function getStorageFromLink(urlObject: URL) {
  */
 export async function findStorage(url: string): Promise<string | undefined> {
   const urlObject = new URL(url);
-  let storage: string | undefined = undefined;
-  while (urlObject.pathname && urlObject.pathname != '/') {
-    storage = await getStorageFromLink(urlObject);
-    if (!storage) {
+  let isStorage = false;
+  while (!isStorage && urlObject.pathname && urlObject.pathname != '/') {
+    isStorage = await isStorageInLinkHeader(urlObject);
+    if (!isStorage) {
       urlObject.pathname = urlObject.pathname.substring(
         0,
         urlObject.pathname.lastIndexOf('/')
       );
     }
   }
-  if (!storage) {
-    storage = await getStorageFromLink(urlObject);
+  if (!isStorage) {
+    isStorage = await isStorageInLinkHeader(urlObject);
   }
-  return storage;
+  if (isStorage) {
+    return urlObject.href;
+  }
+  return undefined;
 }
 
 export async function getUserInfo(webid: string): Promise<UserInfoStruct> {
