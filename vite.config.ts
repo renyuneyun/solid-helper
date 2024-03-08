@@ -13,10 +13,9 @@ export default defineConfig({
       fileName: "solid-helper",
     },
     rollupOptions: {
-      external: ["@inrupt/solid-client-authn-browser", "abort-controller"],
+      external: ["abort-controller"],
       output: {
         globals: {
-          "@inrupt/solid-client-authn-browser": "solidClientAuthnBrowser",
           "abort-controller": "AbortController",
         },
       },

@@ -41,7 +41,6 @@
   "homepage": "https://github.com/renyuneyun/solid-helper#readme",
   "dependencies": {
     "@comunica/query-sparql": "^2.10.0",
-    "@inrupt/solid-client-authn-browser": "^1.16.0",
     "@inrupt/vocab-common-rdf": "^1.0.5",
     "@renyuneyun/parse-link-header-ts": "^1.0.1",
     "solid-namespace": "^0.5.3"
