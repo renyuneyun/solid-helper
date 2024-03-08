@@ -12,17 +12,6 @@ const ns = NS();
 const queryEngine = new QueryEngine();
 
 /**
- * @deprecated
- * Return the storage location if header exists; otherwise undefined
- */
-export async function getStorageFromLink(urlObject: URL) {
-  if (await isStorageInLinkHeader(urlObject)) {
-    return urlObject.href;
-  }
-  return undefined;
-}
-
-/**
  * Identify if the given URL is a storage based on the `Link` header.
  */
 export async function isStorageInLinkHeader(urlObject: URL): Promise<boolean> {
