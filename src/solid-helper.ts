@@ -55,6 +55,7 @@ export async function isStorageInLinkHeader(urlObject: URL): Promise<boolean> {
  */
 export async function findStorage(url: string): Promise<string | undefined> {
   const urlObject = new URL(url);
+  urlObject.hash = '';  // Remove any hash/anchor from the URL
   let isStorage = false;
   while (!isStorage && urlObject.pathname && urlObject.pathname != '/') {
     isStorage = await isStorageInLinkHeader(urlObject);
