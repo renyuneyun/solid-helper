@@ -6,7 +6,7 @@
  */
 
 import assert from "assert";
-import { findStorage, isStorageInLinkHeader } from "../dist/solid-helper.mjs";
+import { findStorage, isStorageInLinkHeader } from "../dist/solid-helper.js";
 
 const POD_URL = process.env['POD_URL'];
 
