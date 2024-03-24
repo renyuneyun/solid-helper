@@ -26,7 +26,9 @@
     "build": "vite build",
     "dev": "vite",
     "serve": "vite preview",
-    "test": "mocha"
+    "test": "mocha",
+    "test-e2e": "mocha test/e2e/",
+    "test-all": "mocha --recursive"
   },
   "repository": {
     "type": "git",

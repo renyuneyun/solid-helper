@@ -17,12 +17,24 @@ For the time being, please see `index.ts` for exported functions and types. They
 
 ## Test
 
-This repo comes with simple / naive tests, under `test/test.mjs`.
+This repo comes with simple / naive unit tests and end-to-end (E2E) tests, under `test/`.
 
-To run the test:
+Remember to run `npm run build` first before testing.
+
+### Unit test
+
+To run the unit test:
 
 ```sh
-POD_URL='https://YOUR-POD-URL/' npm test
+npm test
 ```
 
-See document inside the file for more details.
+### E2E test
+
+To run the E2E test:
+
+```sh
+POD_URL='https://YOUR-POD-URL/' npm run test-e2e
+```
+
+See document inside the file (`test/e2e/test.js`) for more details.
