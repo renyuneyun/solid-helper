@@ -14,12 +14,6 @@ export default defineConfig({
       fileName: "solid-helper",
     },
     rollupOptions: {
-      external: ["abort-controller"],
-      output: {
-        globals: {
-          "abort-controller": "AbortController",
-        },
-      },
       plugins: [
         nodePolyfills(/* options */)
       ],
