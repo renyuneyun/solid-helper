@@ -12,7 +12,8 @@ For the time being, please see `index.ts` for exported functions and types. They
 
 - `getUserInfo()`: Get some common information of the WebID (avatar, name, etc).
 - `findStorage()`:  Get the Pod / storage (recursively up) from the specified URL. Mainly used when WebID does not have `space:storage` specified.
-- `isStorageInLinkHeader()`: Identify if the given URL is a storage based on the `Link` header.
+- `isStorageInLinkHeader()`: Identify if the given URL is a storage based on the `Link` header, of the given URL.
+- `isStorageInLinkHeaderString()`: Identify if the given URL is a storage based on the `Link` header.
 
 ## Test
 

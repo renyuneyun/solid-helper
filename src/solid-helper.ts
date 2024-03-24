@@ -14,6 +14,23 @@ const queryEngine = new QueryEngine();
 /**
  * Identify if the given URL is a storage based on the `Link` header.
  */
+export function isStorageInLinkHeaderString(linkHeader: string, base?: string): boolean {
+  const parsed = parseLinkHeader(linkHeader, base);
+  // console.log('Link header(0):', parsed);
+  if ('type' in parsed) {
+    for (const link of parsed['type']) {
+      if (ns.space('Storage') == link.url) {
+        // console.log('Has storage:', urlObject);
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/**
+ * Identify if the given URL is a storage based on the `Link` header, of the given URL.
+ */
 export async function isStorageInLinkHeader(urlObject: URL): Promise<boolean> {
   let resp = undefined;
   try {
@@ -23,16 +40,7 @@ export async function isStorageInLinkHeader(urlObject: URL): Promise<boolean> {
     const linkHeader = resp.headers.get('Link');
     // console.log('Original Link header:', linkHeader);
     if (linkHeader) {
-      const parsed = parseLinkHeader(linkHeader, urlObject.href);
-      // console.log('Link header(0):', parsed);
-      if ('type' in parsed) {
-        for (const link of parsed['type']) {
-          if (ns.space('Storage') == link.url) {
-            // console.log('Has storage:', urlObject);
-            return true;
-          }
-        }
-      }
+      return isStorageInLinkHeaderString(linkHeader, urlObject.href);
     }
   }
   return false;
