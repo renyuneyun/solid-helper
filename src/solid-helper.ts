@@ -26,9 +26,11 @@ export async function isStorageInLinkHeader(urlObject: URL): Promise<boolean> {
       const parsed = parseLinkHeader(linkHeader, urlObject.href);
       // console.log('Link header(0):', parsed);
       if ('type' in parsed) {
-        if (ns.space('Storage') == parsed['type']!.url) {
-          // console.log('Has storage:', urlObject);
-          return true;
+        for (const link of parsed['type']) {
+          if (ns.space('Storage') == link.url) {
+            // console.log('Has storage:', urlObject);
+            return true;
+          }
         }
       }
     }
