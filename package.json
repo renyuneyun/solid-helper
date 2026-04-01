@@ -27,6 +27,7 @@
     "dev": "vite",
     "serve": "vite preview",
     "test": "mocha",
+    "test-bundle": "npm run build && mocha test/bundle.test.js",
     "test-e2e": "mocha test/e2e/",
     "test-all": "mocha --recursive"
   },
@@ -49,8 +50,12 @@
     "solid-namespace": "^0.5.3"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
     "@types/n3": "^1.16.0",
     "@vitejs/plugin-vue": "^4.1.0",
+    "rollup": "^3.0.0",
     "mocha": "^10.3.0",
     "rollup-plugin-node-externals": "^7.0.1",
     "rollup-plugin-polyfill-node": "^0.13.0",
