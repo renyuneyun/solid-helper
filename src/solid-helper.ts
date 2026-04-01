@@ -1,7 +1,6 @@
 import NS from 'solid-namespace';
 import parseLinkHeader from '@renyuneyun/parse-link-header-ts';
-import { QueryEngine } from '@comunica/query-sparql';
-import { FOAF, VCARD } from '@inrupt/vocab-common-rdf';
+import { Parser, Store } from 'n3';
 
 export interface UserInfoStruct {
   avatar?: string;
@@ -9,7 +8,6 @@ export interface UserInfoStruct {
 }
 
 const ns = NS();
-const queryEngine = new QueryEngine();
 
 /**
  * Identify if the given URL is a storage based on the `Link` header.
@@ -76,41 +74,12 @@ export async function findStorage(url: string): Promise<string | undefined> {
 
 export async function getUserInfo(webid: string): Promise<UserInfoStruct> {
   const userInfo: UserInfoStruct = {};
-  return await queryEngine
-    .queryBindings(
-      `
-      SELECT ?name ?photo {
-          ?s a <${FOAF.Person}>.
-          OPTIONAL {
-              ?s <${VCARD.hasPhoto}> ?photo
-          }
-          OPTIONAL {
-              ?s <${VCARD.fn}> ?name
-          }
-      } LIMIT 1
-  `,
-      {
-        sources: [webid],
-      }
-    )
-    // .then(function (bindingsStream) {
-    //   bindingsStream.on('data', function (data) {
-    //     const userInfo: UserInfoStruct = {};
-    //     userInfo.avatar = data.get('photo')?.id;
-    //     userInfo.name = data.get('name')?.value;
-    //     return userInfo;
-    //   });
-    // });
-    .then(function (bindingsStream) {
-      return new Promise<UserInfoStruct>((resolve) => {
-        bindingsStream.on('data', function (data) {
-          userInfo.avatar = data.get('photo')?.id ?? userInfo.avatar;
-          userInfo.name = data.get('name')?.value ?? userInfo.name;
-        });
-
-        bindingsStream.on('end', function () {
-          resolve(userInfo);
-        });
-      });
-    });
+  try {
+    const response = await fetch(webid, { headers: { Accept: 'text/turtle' } });
+    if (!response.ok) return userInfo;
+    const store = new Store(new Parser({ baseIRI: webid }).parse(await response.text()));
+    userInfo.avatar = store.getObjects(null, ns.vcard('hasPhoto'), null)[0]?.value;
+    userInfo.name = store.getObjects(null, ns.vcard('fn'), null)[0]?.value;
+  } catch (_e) { /* return empty userInfo on any error */ }
+  return userInfo;
 }
